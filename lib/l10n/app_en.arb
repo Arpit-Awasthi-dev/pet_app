@@ -1,0 +1,16 @@
+{
+  "@@locale": "en",
+  "letsFind": "Lets find",
+  "youAFriend": "You a friend",
+  "search": "Search",
+  "age": "Age",
+  "year": "year",
+  "years": "years",
+  "petInfo": "Pet Info",
+  "name": "Name",
+  "price": "Price",
+  "adopt": "Adopt",
+  "cancelAdoption": "Cancel Adoption",
+  "msgAdoptionSuccess": "Great! You've adopted a friend for life.",
+  "msgCancelAdoptionSuccess": "You've canceled you adoption. Sorry to hear that."
+}
