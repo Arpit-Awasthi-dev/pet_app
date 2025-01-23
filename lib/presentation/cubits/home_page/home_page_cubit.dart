@@ -50,7 +50,6 @@ class HomePageCubit extends BaseCubit {
   }
 
   Future<void> updatePetListAdoptionStatus(
-    int index,
     int id,
     bool adoptionStatus,
   ) {
@@ -60,6 +59,10 @@ class HomePageCubit extends BaseCubit {
       list.addAll((state as GetPetListSuccess).petList);
       hasNextPage = (state as GetPetListSuccess).hasNextPage;
     }
+
+    var index = list.indexWhere((item) => item.id == id);
+
+    if (index == -1) return Future.value();
 
     list[index].isAdopted = adoptionStatus;
 

@@ -161,22 +161,6 @@ class DatabaseHelper {
     }
   }
 
-  //
-  // Future<String?> getWikiDetail(int pageID) async {
-  //   final Database db = await instance.database;
-  //   final rowList = await db.query(
-  //     WikiTable().table,
-  //     where: '${WikiTable().columnPageID} LIKE ?',
-  //     whereArgs: ['%$pageID%'],
-  //   );
-  //
-  //   if (rowList.isNotEmpty) {
-  //     final wikiItem = LocalWikiItem.fromJson(rowList[0]);
-  //     return wikiItem.detail;
-  //   }
-  //   return null;
-  // }
-
   final List<LocalPetModel> _preFilledList = [
     LocalPetModel(
       category: 'horse',
@@ -288,14 +272,6 @@ class DatabaseHelper {
       age: '5',
       price: '120000',
       image: 'assets/brownswiss.jpg',
-      adopted: false,
-    ),
-    LocalPetModel(
-      category: 'horse',
-      name: 'American Quater Horse',
-      age: '7',
-      price: '170000',
-      image: 'assets/american_quarter.jpg',
       adopted: false,
     ),
     LocalPetModel(

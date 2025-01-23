@@ -11,6 +11,18 @@
   "price": "Price",
   "adopt": "Adopt",
   "cancelAdoption": "Cancel Adoption",
-  "msgAdoptionSuccess": "Great! You've adopted a friend for life.",
-  "msgCancelAdoptionSuccess": "You've canceled you adoption. Sorry to hear that."
+  "msgAdoptionSuccess": "Great! You've adopted a friend {petName}",
+  "@msgAdoptionSuccess": {
+    "placeholders": {
+      "userName": {
+        "petName": {
+          "type": "String",
+          "example": "Bob"
+        }
+      }
+    }
+  },
+  "msgCancelAdoptionSuccess": "You've canceled you adoption. Sorry to hear that.",
+  "alreadyAdopted": "Already\nAdopted",
+  "adoptedPets": "Adopted Pets"
 }

@@ -67,7 +67,7 @@ class PetRepoImpl implements PetRepository {
   @override
   Future<Either<Failure, bool>> cancelAdoption(int id) async{
     try {
-      var response = await _localDataSource.adoptPet(id);
+      var response = await _localDataSource.cancelAdoption(id);
       return Right(response);
     } catch (e) {
       return Future.value(Left(Failure(message: e.toString())));

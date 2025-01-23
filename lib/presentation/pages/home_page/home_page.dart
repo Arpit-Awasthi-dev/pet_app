@@ -32,13 +32,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _updatePetListAdoptionStatus(
-    int index,
-    int id,
-    bool adoptionStatus,
-  ) {
+  void _updatePetListAdoptionStatus(int id, bool adoptionStatus) {
     final cubit = context.read<HomePageCubit>();
-    cubit.updatePetListAdoptionStatus(index, id, adoptionStatus);
+    cubit.updatePetListAdoptionStatus(id, adoptionStatus);
   }
 
   void _switchTheme() {
@@ -61,9 +57,9 @@ class _HomePageState extends State<HomePage> {
               BlocListener<DetailPageCubit, BaseState>(
                 listener: (_, state) {
                   if (state is AdoptPetSuccess) {
-                    _updatePetListAdoptionStatus(state.index, state.id, true);
+                    _updatePetListAdoptionStatus(state.id, true);
                   } else if (state is CancelAdoptionSuccess) {
-                    _updatePetListAdoptionStatus(state.index, state.id, false);
+                    _updatePetListAdoptionStatus(state.id, false);
                   }
                 },
                 child: const SizedBox(),

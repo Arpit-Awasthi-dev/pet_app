@@ -20,7 +20,6 @@ successToast({
     animationDuration: const Duration(milliseconds: 300),
     animationReverseDuration: const Duration(milliseconds: 200),
     duration: duration ?? const Duration(seconds: 2),
-    ignoreContentClick: true,
     onClose: () async {
       await Future.delayed(const Duration(milliseconds: 200));
       onClose();

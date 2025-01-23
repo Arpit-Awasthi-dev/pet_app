@@ -22,7 +22,7 @@ class DetailPageCubit extends BaseCubit {
     return Future.value();
   }
 
-  Future<void> adoptPet(int index, int id) async {
+  Future<void> adoptPet(int id) async {
     try {
       final response = await _adoptPetUseCase.call(id);
 
@@ -31,7 +31,7 @@ class DetailPageCubit extends BaseCubit {
           handleFailure(failure);
         },
         (response) {
-          emit(AdoptPetSuccess(index: index, id: id));
+          emit(AdoptPetSuccess(id: id));
         },
       );
     } catch (e) {
@@ -39,7 +39,7 @@ class DetailPageCubit extends BaseCubit {
     }
   }
 
-  Future<void> cancelAdoption(int index, int id) async {
+  Future<void> cancelAdoption(int id) async {
     try {
       final response = await _cancelAdoptionUseCase.call(id);
 
@@ -48,7 +48,7 @@ class DetailPageCubit extends BaseCubit {
           handleFailure(failure);
         },
         (response) {
-          emit(CancelAdoptionSuccess(index: index, id: id));
+          emit(CancelAdoptionSuccess(id: id));
         },
       );
     } catch (e) {

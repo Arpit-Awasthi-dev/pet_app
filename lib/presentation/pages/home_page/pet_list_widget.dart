@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_app/core/extensions/context_extension.dart';
 import 'package:pet_app/core/theme/color_schemes.dart';
@@ -105,7 +106,7 @@ class _PetListWidgetState extends State<PetListWidget> {
         onTap: () {
           context.navigator.pushNamed(
             PetDetailPage.routeName,
-            arguments: PetDetailPageParams(index: index, pet: pet),
+            arguments: PetDetailPageParams(pet: pet),
           );
         },
         child: Row(
@@ -142,6 +143,20 @@ class _PetListWidgetState extends State<PetListWidget> {
                 ],
               ),
             ),
+            const SizedBox(width: 12),
+            Visibility(
+              visible: pet.isAdopted,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Text(
+                  context.translations.alreadyAdopted,
+                  style: context.textTheme.labelMedium!.copyWith(
+                    color: Colors.greenAccent,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -153,5 +168,11 @@ class _PetListWidgetState extends State<PetListWidget> {
       padding: const EdgeInsets.only(top: 40, bottom: 20),
       child: const CupertinoActivityIndicator(),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 }

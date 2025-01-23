@@ -72,6 +72,11 @@ dependencies:
   # ---- bot toast ----
   bot_toast: ^4.0.3
 
+  # ---- confetti ----
+  confetti: ^0.8.0
+
+  photo_view: ^0.15.0
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8

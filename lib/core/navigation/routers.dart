@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pet_app/presentation/pages/full_screen_image_page.dart';
 
 import '../../presentation/pages/adopted_pets_page/adopted_pets_page.dart';
 import '../../presentation/pages/detail_page/pet_detail_page.dart';
@@ -29,6 +30,11 @@ class Routers {
       case AdoptedPetsPage.routeName:
         return _pageRoute(builder: (context) {
           return const AdoptedPetsPage();
+        });
+
+      case FullScreenImagePage.routeName:
+        return _pageRoute(builder: (context) {
+          return FullScreenImagePage(image: settings.arguments as String);
         });
 
       default:

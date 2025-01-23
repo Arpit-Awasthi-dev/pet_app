@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_app/core/base_cubit/base_state.dart';
 import 'package:pet_app/core/extensions/context_extension.dart';
 import 'package:pet_app/core/theme/color_schemes.dart';
+import 'package:pet_app/presentation/cubits/detail_page/detail_page_cubit.dart';
 
 import '../../../domain/entities/pet.dart';
 import '../../cubits/adopted_pets_page/adopted_pets_page_cubit.dart';
@@ -32,14 +33,25 @@ class _AdoptedPetsPageState extends State<AdoptedPetsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
-      body: BlocConsumer<AdoptedPetsPageCubit, BaseState>(
-        builder: (_, state) {
-          if (state is GetAdoptedPetListSuccess) {
-            return _rootUI(state.list);
-          }
-          return const SizedBox();
-        },
-        listener: (_, state) {},
+      body: Stack(
+        children: [
+          BlocBuilder<AdoptedPetsPageCubit, BaseState>(
+            builder: (_, state) {
+              if (state is GetAdoptedPetListSuccess) {
+                return _rootUI(state.list);
+              }
+              return const SizedBox();
+            },
+          ),
+          BlocListener<DetailPageCubit, BaseState>(
+            listener: (_, state) {
+              if (state is CancelAdoptionSuccess) {
+                _getAdoptedPetList();
+              }
+            },
+            child: const SizedBox(),
+          ),
+        ],
       ),
     );
   }
@@ -69,7 +81,7 @@ class _AdoptedPetsPageState extends State<AdoptedPetsPage> {
         onTap: () {
           context.navigator.pushNamed(
             PetDetailPage.routeName,
-            arguments: PetDetailPageParams(index: index, pet: pet),
+            arguments: PetDetailPageParams(pet: pet),
           );
         },
         child: Row(
@@ -116,7 +128,7 @@ class _AdoptedPetsPageState extends State<AdoptedPetsPage> {
     return AppBar(
       elevation: 0,
       title: Text(
-        context.translations.petInfo,
+        context.translations.adoptedPets,
         style: context.textTheme.titleLarge,
       ),
     );

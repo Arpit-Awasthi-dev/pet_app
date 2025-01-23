@@ -6,27 +6,23 @@ class DetailPageInitialState extends BaseState {
 }
 
 class AdoptPetSuccess extends DetailPageInitialState {
-  final int index;
   final int id;
 
   AdoptPetSuccess({
-    required this.index,
     required this.id,
   });
 
   @override
-  List<Object?> get props => [index, id];
+  List<Object?> get props => [id];
 }
 
 class CancelAdoptionSuccess extends DetailPageInitialState {
-  final int index;
   final int id;
 
   CancelAdoptionSuccess({
-    required this.index,
     required this.id,
   });
 
   @override
-  List<Object?> get props => [index, id];
+  List<Object?> get props => [id];
 }

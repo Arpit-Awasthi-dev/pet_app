@@ -1,18 +1,21 @@
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_app/core/base_cubit/base_state.dart';
 import 'package:pet_app/core/extensions/context_extension.dart';
 import 'package:pet_app/presentation/cubits/detail_page/detail_page_cubit.dart';
+import 'package:pet_app/presentation/pages/full_screen_image_page.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils.dart';
 import '../../../domain/entities/pet.dart';
 
 class PetDetailPageParams {
-  final int index;
   final Pet pet;
 
-  PetDetailPageParams({required this.index, required this.pet});
+  PetDetailPageParams({required this.pet});
 }
 
 class PetDetailPage extends StatefulWidget {
@@ -26,26 +29,28 @@ class PetDetailPage extends StatefulWidget {
 }
 
 class _PetDetailPageState extends State<PetDetailPage> {
+  final _controller = ConfettiController();
+
   void _adoptPet(BuildContext context) {
+    _controller.play();
     context.read<DetailPageCubit>().adoptPet(
-          widget.params.index,
           widget.params.pet.id,
         );
   }
 
   void _cancelAdoption(BuildContext context) {
     context.read<DetailPageCubit>().cancelAdoption(
-          widget.params.index,
           widget.params.pet.id,
         );
   }
 
-  void _resetState(){
+  /// this is for button
+  void _resetState() {
     context.read<DetailPageCubit>().resetState();
   }
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _resetState();
   }
@@ -53,6 +58,7 @@ class _PetDetailPageState extends State<PetDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      alignment: Alignment.center,
       children: [
         Scaffold(
           appBar: _appBar(context),
@@ -63,11 +69,14 @@ class _PetDetailPageState extends State<PetDetailPage> {
           listener: (_, state) {
             if (state is AdoptPetSuccess || state is CancelAdoptionSuccess) {
               var msg = state is AdoptPetSuccess
-                  ? context.translations.msgAdoptionSuccess
+                  ? context.translations
+                      .msgAdoptionSuccess('petName', widget.params.pet.name)
                   : context.translations.msgCancelAdoptionSuccess;
 
               successToast(
                 onClose: () {
+                  if (!mounted) return;
+                  _controller.stop(clearAllParticles: true);
                   context.navigator.pop();
                 },
                 message: msg,
@@ -75,6 +84,17 @@ class _PetDetailPageState extends State<PetDetailPage> {
             }
           },
           child: const SizedBox(),
+        ),
+        ConfettiWidget(
+          confettiController: _controller,
+          blastDirection: -pi / 2,
+          emissionFrequency: 0.5,
+          gravity: 0.1,
+          blastDirectionality: BlastDirectionality.explosive,
+          colors: const [
+            AppColors.deepBlue,
+            AppColors.red,
+          ],
         ),
       ],
     );
@@ -105,11 +125,19 @@ class _PetDetailPageState extends State<PetDetailPage> {
       tag: widget.params.pet.image,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: Image.asset(
-          height: 200,
-          width: double.infinity,
-          widget.params.pet.image,
-          fit: BoxFit.cover,
+        child: GestureDetector(
+          onTap: () {
+            context.navigator.pushNamed(
+              FullScreenImagePage.routeName,
+              arguments: widget.params.pet.image,
+            );
+          },
+          child: Image.asset(
+            height: 200,
+            width: double.infinity,
+            widget.params.pet.image,
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
@@ -144,21 +172,26 @@ class _PetDetailPageState extends State<PetDetailPage> {
         var state = context.read<DetailPageCubit>().state;
         if (state is AdoptPetSuccess || state is CancelAdoptionSuccess) return;
 
-        !widget.params.pet.isAdopted ? _adoptPet(context) : _cancelAdoption(context);
+        !widget.params.pet.isAdopted
+            ? _adoptPet(context)
+            : _cancelAdoption(context);
       },
       child: Container(
         height: 48,
         margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 72),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: !widget.params.pet.isAdopted ? AppColors.deepBlue : AppColors.red,
+          color:
+              !widget.params.pet.isAdopted ? AppColors.deepBlue : AppColors.red,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              !widget.params.pet.isAdopted ? Icons.favorite : Icons.heart_broken,
+              !widget.params.pet.isAdopted
+                  ? Icons.favorite
+                  : Icons.heart_broken,
               size: 20,
               color: Colors.white,
             ),
@@ -185,5 +218,11 @@ class _PetDetailPageState extends State<PetDetailPage> {
         style: context.textTheme.titleLarge,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }
