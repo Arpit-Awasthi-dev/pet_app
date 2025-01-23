@@ -11,7 +11,7 @@ import '../domain/usecases/get_pet_list_use_case.dart';
 import '../presentation/cubits/adopted_pets_page/adopted_pets_page_cubit.dart';
 import '../presentation/cubits/detail_page/detail_page_cubit.dart';
 import '../presentation/cubits/home_page/home_page_cubit.dart';
-import 'db/database_helper.dart';
+import 'db/database_service.dart';
 import 'navigation/navigation_service.dart';
 
 //Service locator instance
@@ -42,12 +42,12 @@ Future<void> init() async {
 
   /// ----------- Data Sources ----------
   sl.registerLazySingleton<PetLocalDataSource>(
-    () => PetLocalDataSourceImpl(db: sl()),
+    () => PetLocalDataSourceImpl(service: sl()),
   );
 
   /// ------------ Others -------------
   sl.registerLazySingleton(() => NavigationService());
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-  sl.registerLazySingleton(() => DatabaseHelper.instance);
+  sl.registerLazySingleton(() => DatabaseService.instance);
 }
