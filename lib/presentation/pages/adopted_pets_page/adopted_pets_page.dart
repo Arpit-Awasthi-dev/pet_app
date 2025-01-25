@@ -38,7 +38,11 @@ class _AdoptedPetsPageState extends State<AdoptedPetsPage> {
           BlocBuilder<AdoptedPetsPageCubit, BaseState>(
             builder: (_, state) {
               if (state is GetAdoptedPetListSuccess) {
-                return _rootUI(state.list);
+                if (state.list.isNotEmpty) {
+                  return _rootUI(state.list);
+                } else {
+                  return _emptyPage();
+                }
               }
               return const SizedBox();
             },
@@ -120,6 +124,28 @@ class _AdoptedPetsPageState extends State<AdoptedPetsPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _emptyPage() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.playlist_remove,
+            size: 60,
+            color: context.textTheme.labelMedium!.color,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            context.translations.noAdoptedPets,
+            style: context.textTheme.labelMedium!.copyWith(
+              fontSize: 16
+            ),
+          ),
+        ],
       ),
     );
   }

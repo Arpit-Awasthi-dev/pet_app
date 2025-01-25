@@ -59,11 +59,11 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
 
   # ---- sqflite ---- #
-  sqflite: ^2.2.6
   sqflite_common_ffi: any
+  sqflite_common_ffi_web: ^0.4.5+4
 
   path_provider: ^2.0.14
-  path: ^1.8.2
+  path: any
 
   # ---- for light/dark theme ----
   adaptive_theme: ^3.6.0

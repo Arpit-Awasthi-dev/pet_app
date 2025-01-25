@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:pet_app/core/db/tables/adopted_pets_table.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../../data/models/local_models/local_pet_model.dart';
 

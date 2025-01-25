@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 import 'tables/adopted_pets_table.dart';
 
@@ -17,11 +19,16 @@ class DatabaseService {
   Future<Database> get database async => _database ?? await _initDatabase();
 
   Future<Database> _initDatabase() async {
-    // Get the documents directory.
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    // Construct the path to the database file.
-    final databasePath = join(documentsDirectory.path, _databaseName);
-    // Open/create the database at the constructed path.
+    final String databasePath;
+    if (kIsWeb) {
+      databaseFactory = databaseFactoryFfiWeb;
+      databasePath = 'my_web_web.db';
+    }else{
+      // Get the documents directory.
+      final documentsDirectory = await getApplicationDocumentsDirectory();
+      // Construct the path to the database file.
+      databasePath = join(documentsDirectory.path, _databaseName);
+    }
     return openDatabase(
       databasePath,
       version: _databaseVersion,

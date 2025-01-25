@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: KeyboardDismissOnTap(
-          dismissOnCapturedTaps: true,
+          dismissOnCapturedTaps: false,
           child: Stack(
             children: [
               _rootUI(),

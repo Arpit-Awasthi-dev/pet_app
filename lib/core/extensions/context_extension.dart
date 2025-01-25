@@ -13,4 +13,6 @@ extension ExtBuildContext on BuildContext {
   NavigatorState get navigator => Navigator.of(this);
 
   bool get isDarkMode => theme.colorScheme.brightness == Brightness.dark;
+
+  Size get getSize => MediaQuery.of(this).size;
 }

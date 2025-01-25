@@ -24,5 +24,6 @@
   },
   "msgCancelAdoptionSuccess": "You've canceled you adoption. Sorry to hear that.",
   "alreadyAdopted": "Already\nAdopted",
-  "adoptedPets": "Adopted Pets"
+  "adoptedPets": "Adopted Pets",
+  "noAdoptedPets": "No Adopted Pets"
 }

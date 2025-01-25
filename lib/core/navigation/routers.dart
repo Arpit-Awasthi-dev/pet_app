@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pet_app/presentation/pages/full_screen_image_page.dart';
 
@@ -43,6 +44,12 @@ class Routers {
   }
 
   static _pageRoute({required WidgetBuilder builder, bool showModal = false}) {
+    if(kIsWeb){
+      return MaterialPageRoute(
+        builder: builder,
+        settings: _settings,
+      );
+    }
     if (Platform.isAndroid) {
       return MaterialPageRoute(
         builder: builder,
